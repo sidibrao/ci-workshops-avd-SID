@@ -1,11 +1,5 @@
 aaa_root:
   disabled: true
-banners:
-  motd: 'You shall not pass. Unless you are authorized. Then you shall pass.
-
-    EOF
-
-    '
 config_end: true
 enable_password:
   disabled: true
