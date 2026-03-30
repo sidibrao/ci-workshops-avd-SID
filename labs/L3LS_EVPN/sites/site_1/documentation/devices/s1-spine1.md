@@ -9,7 +9,6 @@
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
-  - [Enable Password](#enable-password)
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -47,20 +46,20 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | OOB_MANAGEMENT | oob | default | 192.168.0.10/24 | 192.168.0.1 |
+| Management0 | oob_management | oob | default | 192.168.0.10/24 | 192.168.0.1 |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management0 | OOB_MANAGEMENT | oob | default | - | - |
+| Management0 | oob_management | oob | default | - | - |
 
 #### Management Interfaces Device Configuration
 
 ```eos
 !
 interface Management0
-   description OOB_MANAGEMENT
+   description oob_management
    no shutdown
    ip address 192.168.0.10/24
 ```
@@ -97,9 +96,9 @@ ntp server 192.168.0.1 iburst local-interface Management0
 
 #### Management API HTTP Summary
 
-| HTTP | HTTPS | UNIX-Socket | Default Services |
-| ---- | ----- | ----------- | ---------------- |
-| False | True | - | - |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 #### Management API VRF Access
 
@@ -136,10 +135,6 @@ management api http-commands
 username arista privilege 15 role network-admin secret sha512 <removed>
 username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnGvrGPklIJg4Uh+h31pkybs17HvzIYHTho0IhaqUxVpN+uASulWiBVeym0wiuXLN4bS/gGvcRQfdMb6gW5nOL2lv6efLBkWVDH1YpMlaq003+nZjVeh+NdWoxDY2kxdXFsFbMRdK7qUhcKierc9uqbgriXGJj1lfyyjfp8FPiBRQZfR0+PKwnLGv+YzY8R885I5iWjI7l1K1qTvAMn23uUMSHz09P85s1UdeNO1uMOPGEszoSeNoGbQLdDuRIzcvqQyDXkd1/cSxH4c19ZMbN8jaoe6Q2A+iq/6fqpQ9Y0vp7rL712PqyKyLXB4mHRyH6UA5G38YCA36FS/3Gkq8t arista@toronto-day2-37-1c55ad53-eos
 ```
-
-### Enable Password
-
-Enable password has been disabled
 
 ### AAA Authorization
 
@@ -220,56 +215,56 @@ vlan internal order ascending range 1006 1199
 
 ##### IPv4
 
-| Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
-| --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet2 | P2P_s1-leaf1_Ethernet2 | - | 172.16.1.0/31 | default | 1500 | False | - | - |
-| Ethernet3 | P2P_s1-leaf2_Ethernet2 | - | 172.16.1.4/31 | default | 1500 | False | - | - |
-| Ethernet4 | P2P_s1-leaf3_Ethernet2 | - | 172.16.1.8/31 | default | 1500 | False | - | - |
-| Ethernet5 | P2P_s1-leaf4_Ethernet2 | - | 172.16.1.12/31 | default | 1500 | False | - | - |
-| Ethernet7 | P2P_s1-brdr1_Ethernet2 | - | 172.16.1.16/31 | default | 1500 | False | - | - |
-| Ethernet8 | P2P_s1-brdr2_Ethernet2 | - | 172.16.1.20/31 | default | 1500 | False | - | - |
+| Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
+| --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
+| Ethernet2 | P2P_LINK_TO_S1-LEAF1_Ethernet2 | routed | - | 172.16.1.0/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_LINK_TO_S1-LEAF2_Ethernet2 | routed | - | 172.16.1.4/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_S1-LEAF3_Ethernet2 | routed | - | 172.16.1.8/31 | default | 1500 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_S1-LEAF4_Ethernet2 | routed | - | 172.16.1.12/31 | default | 1500 | False | - | - |
+| Ethernet7 | P2P_LINK_TO_S1-BRDR1_Ethernet2 | routed | - | 172.16.1.16/31 | default | 1500 | False | - | - |
+| Ethernet8 | P2P_LINK_TO_S1-BRDR2_Ethernet2 | routed | - | 172.16.1.20/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
 ```eos
 !
 interface Ethernet2
-   description P2P_s1-leaf1_Ethernet2
+   description P2P_LINK_TO_S1-LEAF1_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 172.16.1.0/31
 !
 interface Ethernet3
-   description P2P_s1-leaf2_Ethernet2
+   description P2P_LINK_TO_S1-LEAF2_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 172.16.1.4/31
 !
 interface Ethernet4
-   description P2P_s1-leaf3_Ethernet2
+   description P2P_LINK_TO_S1-LEAF3_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 172.16.1.8/31
 !
 interface Ethernet5
-   description P2P_s1-leaf4_Ethernet2
+   description P2P_LINK_TO_S1-LEAF4_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 172.16.1.12/31
 !
 interface Ethernet7
-   description P2P_s1-brdr1_Ethernet2
+   description P2P_LINK_TO_S1-BRDR1_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 172.16.1.16/31
 !
 interface Ethernet8
-   description P2P_s1-brdr2_Ethernet2
+   description P2P_LINK_TO_S1-BRDR2_Ethernet2
    no shutdown
    mtu 1500
    no switchport
@@ -284,20 +279,20 @@ interface Ethernet8
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | ROUTER_ID | default | 10.250.1.1/32 |
+| Loopback0 | EVPN_Overlay_Peering | default | 10.250.1.1/32 |
 
 ##### IPv6
 
 | Interface | Description | VRF | IPv6 Address |
 | --------- | ----------- | --- | ------------ |
-| Loopback0 | ROUTER_ID | default | - |
+| Loopback0 | EVPN_Overlay_Peering | default | - |
 
 #### Loopback Interfaces Device Configuration
 
 ```eos
 !
 interface Loopback0
-   description ROUTER_ID
+   description EVPN_Overlay_Peering
    no shutdown
    ip address 10.250.1.1/32
 ```
@@ -410,9 +405,9 @@ ASN Notation: asplain
 
 ##### EVPN Peer Groups
 
-| Peer Group | Activate | Route-map In | Route-map Out | Encapsulation | Next-hop-self Source Interface |
-| ---------- | -------- | ------------ | ------------- | ------------- | ------------------------------ |
-| EVPN-OVERLAY-PEERS | True |  - | - | default | - |
+| Peer Group | Activate | Encapsulation |
+| ---------- | -------- | ------------- |
+| EVPN-OVERLAY-PEERS | True | default |
 
 #### Router BGP Device Configuration
 
@@ -420,8 +415,8 @@ ASN Notation: asplain
 !
 router bgp 65100
    router-id 10.250.1.1
-   no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
+   no bgp default ipv4-unicast
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -436,22 +431,22 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 10.250.1.3 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.3 remote-as 65101
-   neighbor 10.250.1.3 description s1-leaf1_Loopback0
+   neighbor 10.250.1.3 description s1-leaf1
    neighbor 10.250.1.4 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.4 remote-as 65101
-   neighbor 10.250.1.4 description s1-leaf2_Loopback0
+   neighbor 10.250.1.4 description s1-leaf2
    neighbor 10.250.1.5 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.5 remote-as 65102
-   neighbor 10.250.1.5 description s1-leaf3_Loopback0
+   neighbor 10.250.1.5 description s1-leaf3
    neighbor 10.250.1.6 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.6 remote-as 65102
-   neighbor 10.250.1.6 description s1-leaf4_Loopback0
+   neighbor 10.250.1.6 description s1-leaf4
    neighbor 10.250.1.7 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.7 remote-as 65103
-   neighbor 10.250.1.7 description s1-brdr1_Loopback0
+   neighbor 10.250.1.7 description s1-brdr1
    neighbor 10.250.1.8 peer group EVPN-OVERLAY-PEERS
    neighbor 10.250.1.8 remote-as 65103
-   neighbor 10.250.1.8 description s1-brdr2_Loopback0
+   neighbor 10.250.1.8 description s1-brdr2
    neighbor 172.16.1.1 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.16.1.1 remote-as 65101
    neighbor 172.16.1.1 description s1-leaf1_Ethernet2
